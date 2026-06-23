@@ -8,6 +8,7 @@ repository:
     team: "AI Tools Team"
 
 artifacts:
+
    - name: tfs-mcp-server
     type: mcp-server
     path: mcp-servers/tfs-mcp-server
