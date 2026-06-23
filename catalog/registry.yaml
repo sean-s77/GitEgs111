@@ -1,0 +1,464 @@
+schema_version: 1
+
+repository:
+  name: gs-framework-aitools
+  purpose: Shared monorepo for reusable MCP servers, skills, and AI
+    tooling support files.
+  owners:
+    team: "AI Tools Team"
+
+artifacts:
+  - name: skills-server
+    type: mcp-server
+    path: mcp-servers/skills-server
+    description: Indexes markdown skill files and exposes targeted retrieval tools over MCP so clients can fetch only relevant sections.
+    plain_description: Helps an agent find the right skill instructions quickly instead of searching through everything by hand.
+    tags:
+      - platform
+      - knowledge-management
+      - skill-indexing
+      - content-retrieval
+    install_prompt: >-
+      Install the MCP server "skills-server" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/mcp-servers/skills-server. Use that folder as the source, preserve its configuration files, and make it available in my global MCP server setup for future sessions.
+    version: 1.0.0
+    lifecycle: beta
+    owner_team: "Oasis Core"
+    primary_maintainer: "Anamika.Aggarwal@aristocrat.com"
+    backup_maintainer: "Oasis Core"
+    dependencies:
+      internal: []
+      external:
+        - markdown-skill-files
+
+  - name: tfs-mcp-server
+    type: mcp-server
+    path: mcp-servers/tfs-mcp-server
+    description: Exposes read and write operations for on-premises TFS/Azure DevOps Server Git repositories and work items over MCP.
+    plain_description: Lets an agent look up and update TFS code and work items without leaving the conversation.
+    tags:
+      - development
+      - devops
+      - tfs
+      - work-item-management
+    install_prompt: >-
+      Install the MCP server "tfs-mcp-server" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/mcp-servers/tfs-mcp-server. Use that folder as the source, preserve its configuration files, and make it available in my global MCP server setup for future sessions.
+    version: 1.0.0
+    lifecycle: beta
+    owner_team: "Oasis Core"
+    primary_maintainer: "Mohit.Taneja@aristocrat.com"
+    backup_maintainer: "Oasis Core"
+    dependencies:
+      internal: []
+      external:
+        - tfs-azure-devops-server-api
+
+  - name: confluence-server
+    type: mcp-server
+    path: mcp-servers/confluence-server
+    description: Exposes Confluence content lookup and retrieval operations over MCP.
+    plain_description: Lets an agent read Confluence pages and documentation so it can answer questions with the team’s existing knowledge.
+    tags:
+      - documentation
+      - knowledge-management
+      - confluence
+      - content-retrieval
+    install_prompt: >-
+      Install the MCP server "confluence-server" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/mcp-servers/confluence-server. Use that folder as the source, preserve its configuration files, and make it available in my global MCP server setup for future sessions.
+    version: 1.0.0
+    lifecycle: beta
+    owner_team: "nVision Team"
+    primary_maintainer: "vishakha.garg@aristocrat.com"
+    backup_maintainer: "Vishakha Garg"
+    dependencies:
+      internal: []
+      external:
+        - confluence-cloud-rest-api
+
+  - name: confluence-owner-search-server
+    type: mcp-server
+    path: mcp-servers/confluence-owner-search-server
+    description: Searches Confluence content for ownership details and responsible teams over MCP.
+    plain_description: Helps an agent find who owns a system, document, or area by searching team knowledge in Confluence.
+    tags:
+      - documentation
+      - ownership
+      - confluence
+      - search
+    install_prompt: >-
+      Install the MCP server "confluence-owner-search-server" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/mcp-servers/confluence-owner-search-server. Use that folder as the source, preserve its configuration files, and make it available in my global MCP server setup for future sessions.
+    version: 1.0.0
+    lifecycle: beta
+    owner_team: "nVision Team"
+    primary_maintainer: "vishakha.garg@aristocrat.com"
+    backup_maintainer: "Vishakha Garg"
+    dependencies:
+      internal: []
+      external:
+        - confluence-cloud-rest-api
+
+  - name: pbi-mcp-server
+    type: mcp-server
+    path: mcp-servers/pbi-mcp-server
+    description: Provides product backlog item lookup and related metadata retrieval over MCP.
+    plain_description: Lets an agent pull backlog item details so it can understand requested work and the surrounding requirements.
+    tags:
+      - product-management
+      - backlog
+      - requirements
+      - work-items
+    install_prompt: >-
+      Install the MCP server "pbi-mcp-server" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/mcp-servers/pbi-mcp-server. Use that folder as the source, preserve its configuration files, and make it available in my global MCP server setup for future sessions.
+    version: 1.0.0
+    lifecycle: beta
+    owner_team: "nVision Team"
+    primary_maintainer: "vishakha.garg@aristocrat.com"
+    backup_maintainer: "Vishakha Garg"
+    dependencies:
+      internal: []
+      external:
+        - tfs-azure-devops-server-api
+        - confluence-cloud-rest-api
+
+  - name: windows-search-mcp
+    type: mcp-server
+    path: mcp-servers/windows-search-mcp
+    description: Searches approved Windows roots through the Windows Search index and falls back to ripgrep for symbol-aware content lookup.
+    plain_description: Helps an agent search large Windows code and file trees quickly, including symbol-like content when the index is weak or missing.
+    tags:
+      - development
+      - diagnostics
+      - windows
+      - search
+    install_prompt: >-
+      Install the MCP server "windows-search-mcp" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/mcp-servers/windows-search-mcp. Use that folder as the source, preserve its configuration files, and make it available in my global MCP server setup for future sessions. Prompt me for the paths covered by the Windows Search index to ensure the server can search the right locations.
+    version: 1.1.0
+    lifecycle: released
+    owner_team: Level 4
+    primary_maintainer: sean.sweitzer@aristocrat.com
+    backup_maintainer: Rahul.Khare2@aristocrat.com
+    dependencies:
+      internal: []
+      external:
+        - "@modelcontextprotocol/sdk"
+        - zod
+        - windows-search-service
+
+  - name: ati-production-root-cause-analyzer
+    type: skill
+    path: skills/ati-production-root-cause-analyzer
+    description: Investigates production failures against a local codebase and produces actionable bug tickets, proposals, or evidence-gap reports.
+    plain_description: Helps support and development teams turn a production problem into a clear root-cause finding and next step.
+    tags:
+      - l4-support
+      - production-support
+      - debugging
+      - root-cause-analysis
+    install_prompt: >-
+      Install the skill "ati-production-root-cause-analyzer" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/ati-production-root-cause-analyzer. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.2.0
+    lifecycle: released
+    owner_team: Level 4
+    primary_maintainer: sean.sweitzer@aristocrat.com
+    backup_maintainer: Rahul.Khare2@aristocrat.com
+    dependencies:
+      internal: []
+      external:
+        - local-repository-access
+
+  - name: mssql-unit-tests
+    type: skill
+    path: skills/mssql-unit-tests
+    description: Authors, structures, and executes SQL Server unit test suites for stored procedures and functions using the repo's UnitTests conventions.
+    plain_description: Helps an agent build and run SQL Server unit tests that follow the team's naming, setup, and validation patterns.
+    tags:
+      - database
+      - sql-server
+      - unit-testing
+      - test-automation
+    install_prompt: >-
+      Install the skill "mssql-unit-tests" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/mssql-unit-tests. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: experimental
+    owner_team: Loyalty
+    primary_maintainer: utsav.verma@aristocrat.com
+    backup_maintainer: Loyalty
+    dependencies:
+      internal:
+        - tfs-mcp-server
+      external:
+        - sqlcmd
+        - sql-server-database-access
+        
+  - name: api-input-and-analysis
+    type: skill
+    path: skills/api-input-and-analysis
+    description: Analyzes API inputs and specifications to extract implementation and testing context.
+    plain_description: Helps a user understand an API request or specification before they build code or tests around it.
+    tags:
+      - api
+      - analysis
+      - requirements
+      - test-design
+    install_prompt: >-
+      Install the skill "api-input-and-analysis" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/api-input-and-analysis. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: beta
+    owner_team: Level 4
+    primary_maintainer: kishore.singh@aristocrat.com
+    backup_maintainer: Level 4
+    dependencies:
+      internal: []
+      external:
+        - local-repository-access
+
+  - name: api-postman-generator
+    type: skill
+    path: skills/api-postman-generator
+    description: Generates Postman collections and request assets from API inputs or specifications.
+    plain_description: Creates ready-to-use Postman requests so teams can try, share, and validate API calls faster.
+    tags:
+      - api
+      - postman
+      - request-generation
+      - test-automation
+    install_prompt: >-
+      Install the skill "api-postman-generator" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/api-postman-generator. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: beta
+    owner_team: Level 4
+    primary_maintainer: kishore.singh@aristocrat.com
+    backup_maintainer: Level 4
+    dependencies:
+      internal: []
+      external:
+        - local-repository-access
+
+  - name: api-review-and-export
+    type: skill
+    path: skills/api-review-and-export
+    description: Reviews API artifacts and exports structured output for downstream testing workflows.
+    plain_description: Reviews API materials and turns them into structured outputs that other testing steps can reuse.
+    tags:
+      - api
+      - review
+      - export
+      - test-design
+    install_prompt: >-
+      Install the skill "api-review-and-export" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/api-review-and-export. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: beta
+    owner_team: Level 4
+    primary_maintainer: kishore.singh@aristocrat.com
+    backup_maintainer: Level 4
+    dependencies:
+      internal: []
+      external:
+        - local-repository-access
+
+  - name: api-testcase-generator
+    type: skill
+    path: skills/api-testcase-generator
+    description: Produces API test cases from endpoint details, inputs, and expected behavior.
+    plain_description: Creates API test cases so teams can cover expected behavior faster and more consistently.
+    tags:
+      - api
+      - qa
+      - test-cases
+      - test-design
+    install_prompt: >-
+      Install the skill "api-testcase-generator" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/api-testcase-generator. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: beta
+    owner_team: Level 4
+    primary_maintainer: kishore.singh@aristocrat.com
+    backup_maintainer: Level 4
+    dependencies:
+      internal: []
+      external:
+        - local-repository-access
+
+  - name: readyapi-pattern-mining
+    type: skill
+    path: skills/readyapi-pattern-mining
+    description: Mines reusable API testing patterns and conventions from ReadyAPI assets.
+    plain_description: Pulls reusable testing patterns from existing ReadyAPI work so teams do not have to start from scratch.
+    tags:
+      - api
+      - readyapi
+      - qa
+      - pattern-mining
+    install_prompt: >-
+      Install the skill "readyapi-pattern-mining" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/readyapi-pattern-mining. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: beta
+    owner_team: Level 4
+    primary_maintainer: kishore.singh@aristocrat.com
+    backup_maintainer: Level 4
+    dependencies:
+      internal: []
+      external:
+        - local-repository-access
+
+  - name: testrail-case-importer
+    type: skill
+    path: skills/testrail-case-importer
+    description: Imports or transforms test cases into a TestRail-ready structure.
+    plain_description: Converts test cases into a format teams can load into TestRail with less manual cleanup.
+    tags:
+      - qa
+      - testrail
+      - test-cases
+      - import
+    install_prompt: >-
+      Install the skill "testrail-case-importer" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/testrail-case-importer. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: beta
+    owner_team: Level 4
+    primary_maintainer: kishore.singh@aristocrat.com
+    backup_maintainer: Level 4
+
+  - name: ati-smart-locator-self-healing
+    type: skill
+    path: skills/ati-smart-locator-self-healing
+    description: Generates new Selenium locators and self-heals broken ones from DOM evidence, logical names, and broken locator hints.
+    plain_description: Repairs broken UI locators so automated tests keep working after the application changes.
+    tags:
+      - ui-automation
+      - selenium
+      - locators
+      - self-healing
+    install_prompt: >-
+      Install the skill "ati-smart-locator-self-healing" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/ati-smart-locator-self-healing. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: experimental
+    owner_team: "Automation Team"
+    primary_maintainer: "mohit.bawari@aristocrat.com"
+    backup_maintainer: "rakesh.joshi@aristocrat.com"
+    dependencies:
+      internal: []
+      external:
+        - local-repository-access
+
+  - name: agentic-automation-creator
+    type: skill
+    path: skills/agentic-automation
+    description: Unified agentic automation skill package for TFS or TestRail test-case retrieval, context discovery, object resolution, case expansion, feature generation, execution, failure triage, and product-specific automation guidance.
+    plain_description: Helps teams create and run automation work end to end, from test case lookup to execution and failure follow-up.
+    tags:
+      - test-automation
+      - agentic-workflows
+      - feature-generation
+      - failure-triage
+    install_prompt: >-
+      Install the skill "agentic-automation-creator" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/agentic-automation. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: experimental
+    owner_team: "Automation Team"
+    primary_maintainer: "kishore.krishnan@aristocrat.com"
+    backup_maintainer: "mohit.bawari@aristocrat.com"
+    dependencies:
+      internal: []
+      external:
+        - local-repository-access
+        - tfs-or-testrail-access
+        - automation-runner-access
+        - database-access
+        - local-file-export
+
+  - name: ai-test-case-reviewer
+    type: skill
+    path: skills/ai-test-case-review
+    description: Reviews test cases with AI assistance for quality, coverage, and clarity.
+    plain_description: Reviews test cases in plain language to catch missing coverage, weak steps, and unclear wording.
+    tags:
+      - qa
+      - ai-review
+      - coverage-analysis
+      - test-cases
+    install_prompt: >-
+      Install the skill "ai-test-case-reviewer" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/ai-test-case-review. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: experimental
+    owner_team: "Quality Team"
+    primary_maintainer: "kishore.krishnan@aristocrat.com"
+    backup_maintainer: "mohit.bawari@aristocrat.com"
+    dependencies:
+      internal: []
+      external:
+        - local-repository-access
+        - tfs-or-testrail-access
+        - azure-openai-access
+        - powershell
+
+  - name: ati-caveman-output
+    type: skill
+    path: skills/ati-caveman-output
+    description: Applies a terse, low-chatter, token-saving response style for Codex work when the user wants blunt answers and minimal narration.
+    plain_description: Makes agent responses shorter and more direct when the user wants less chatter and faster reading.
+    tags:
+      - developer-experience
+      - response-style
+      - token-efficiency
+      - low-chatter
+    install_prompt: >-
+      Install the skill "ati-caveman-output" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/ati-caveman-output. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: released
+    owner_team: Level 4
+    primary_maintainer: sean.sweitzer@aristocrat.com
+    backup_maintainer: Rahul.Khare2@aristocrat.com
+    dependencies:
+      internal: []
+      external: []
+
+  - name: ati-coding-agent-loop
+    type: skill
+    path: skills/ati-coding-agent-loop
+    description: Guides Codex or GitHub Copilot through short evidence-based loops for repo orientation, bug fixes, feature work, SQL changes, production triage, and code review.
+    plain_description: Helps an agent work through coding tasks in small verified steps so it inspects first, changes less, and proves results.
+    tags:
+      - developer-workflow
+      - debugging
+      - code-review
+      - implementation
+    install_prompt: >-
+      Install the skill "ati-coding-agent-loop" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/ati-coding-agent-loop. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: experimental
+    owner_team: Level 4
+    primary_maintainer: sean.sweitzer@aristocrat.com
+    backup_maintainer: Rahul.Khare2@aristocrat.com
+    dependencies:
+      internal: []
+      external:
+        - local-repository-access
+
+  - name: loadtest-rca-analyzer
+    type: skill
+    path: skills/loadtest-rca-analyzer
+    description: Correlates load-test telemetry, logs, and infrastructure signals into evidence-backed root-cause reports for performance failures.
+    plain_description: Turns load-test logs and metrics into a clearer explanation of why performance failed.
+    tags:
+      - performance
+      - load-testing
+      - telemetry
+      - root-cause-analysis
+    install_prompt: >-
+      Install the skill "loadtest-rca-analyzer" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/skills/loadtest-rca-analyzer. Use that folder as the source, preserve its metadata files, and make it available in my global skills setup for future sessions.
+    version: 0.1.0
+    lifecycle: experimental
+    owner_team: "Automation Team"
+    primary_maintainer: "rahul.pandey@aristocrat.com"
+    backup_maintainer: "mohit.bawari@aristocrat.com"
+    dependencies:
+      internal: []
+      external:
+        - python
+        - elasticsearch
+        - pyyaml
+        - requests
+        - pandas
+        - matplotlib
+        - numpy
+        - python-dateutil
+        - urllib3
