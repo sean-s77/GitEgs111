@@ -8,8 +8,29 @@ repository:
     team: "AI Tools Team"
 
 artifacts:
+  - name: skills-server
+    type: mcp-server
+    path: mcp-servers/skills-server
+    description: Indexes markdown skill files and exposes targeted retrieval tools over MCP so clients can fetch only relevant sections.
+    plain_description: Helps an agent find the right skill instructions quickly instead of searching through everything by hand.
+    tags:
+      - platform
+      - knowledge-management
+      - skill-indexing
+      - content-retrieval
+    install_prompt: >-
+      Install the MCP server "skills-server" globally from https://github.com/Aristocrat-Gaming/gs-framework-aitools/tree/main/mcp-servers/skills-server. Use that folder as the source, preserve its configuration files, and make it available in my global MCP server setup for future sessions.
+    version: 1.0.0
+    lifecycle: beta
+    owner_team: "Oasis Core"
+    primary_maintainer: "Anamika.Aggarwal@aristocrat.com"
+    backup_maintainer: "Oasis Core"
+    dependencies:
+      internal: []
+      external:
+        - markdown-skill-files
 
-   - name: tfs-mcp-server
+  - name: tfs-mcp-server
     type: mcp-server
     path: mcp-servers/tfs-mcp-server
     description: Exposes read and write operations for on-premises TFS/Azure DevOps Server Git repositories and work items over MCP.
